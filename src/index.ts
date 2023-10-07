@@ -5,7 +5,9 @@ import { createSmoothDrawFunc } from './webgl/filters';
 
 const image = sharp(path.resolve(__dirname, '..', 'example.jpg'));
 
-image.metadata()
+image
+.ensureAlpha()
+.metadata()
 .then((metadata) => {
     const width = metadata.width;
     const height = metadata.height;
