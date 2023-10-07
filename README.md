@@ -12,6 +12,10 @@ A headless version of Dithermark using bun.
 * `npm install`
 * `bun src/index.ts`
 
+## Running on Node
+
+* `bun build.js` && `./fix-node.sh` && `node out/index.js`
+
 ## License
 
 Dithermark-bun is released under the MIT License. See license.txt for more details.
