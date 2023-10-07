@@ -9,6 +9,7 @@
   "author": "Allen Garvey",
   "license": "MIT",
   "dependencies": {
+    "gl": "^6.0.2",
     "sharp": "^0.32.6"
   },
   "devDependencies": {

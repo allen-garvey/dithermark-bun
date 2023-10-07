@@ -1,5 +1,7 @@
 const path = require('path');
-const sharp = require("sharp");
+const sharp = require('sharp');
+import { createAndLoadTextureFromArray } from './webgl/webgl';
+import { createSmoothDrawFunc } from './webgl/filters';
 
 
 const imageFile = Bun.file(path.resolve(__dirname, '..', 'example.jpg'));
@@ -19,14 +21,21 @@ imageFile.arrayBuffer()
         kernel: 'nearest',
         fastShrinkOnLoad: false,
     })
-    .png()
+    .raw()
     .toBuffer()
-    .then(buffer => sharp(buffer).resize({
-        width,
-        kernel: 'nearest',
-        fastShrinkOnLoad: false,
+    .then((buffer: Uint8Array) => {
+        // won't work until node_module_register is implemented
+        // https://github.com/oven-sh/bun/issues/4290
+        // const gl = require('gl')(width, height, { preserveDrawingBuffer: true });
+        // createAndLoadTextureFromArray(gl, buffer, width, height);
+        
+        return sharp(buffer).resize({
+            width,
+            kernel: 'nearest',
+            fastShrinkOnLoad: false,
+        });
     })
-    .png()
-    .withMetadata()
-    .toFile(path.resolve(__dirname, '..', 'dithered.png')));
+    // .png()
+    // .withMetadata()
+    // .toFile(path.resolve(__dirname, '..', 'dithered.png'));
 });
