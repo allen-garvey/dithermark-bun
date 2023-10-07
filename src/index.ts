@@ -24,7 +24,7 @@ image
     })
     return new Promise<void>((resolve, reject) => {
         image.raw()
-        .toBuffer((err, buffer: Uint8Array, info) => {
+        .toBuffer((err, pixels: Uint8Array, info) => {
             if(err){
                 return reject();
             }
@@ -34,10 +34,16 @@ image
 
             // won't work until node_module_register is implemented
             // https://github.com/oven-sh/bun/issues/4290
-            const gl = require('gl')(width, height, { preserveDrawingBuffer: true });
-            createAndLoadTextureFromArray(gl, buffer, width, height);
+            const gl = require('gl')(resizedWidth, resizedHeight, { preserveDrawingBuffer: true });
+            const texture = createAndLoadTextureFromArray(gl, pixels, resizedWidth, resizedHeight);
+            const smoothFilter = createSmoothDrawFunc(gl);
+            smoothFilter(gl, texture, resizedWidth, resizedHeight, (gl, customUniformLocations) => {
+                gl.uniform1i(customUniformLocations['u_radius'], 4);
+                gl.uniform2f(customUniformLocations['u_image_dimensions'], new Float32Array([resizedWidth, resizedHeight]));
+            });
+
             
-            return sharp(buffer, {
+            return sharp(pixels, {
                 raw: {
                     height: resizedHeight,
                     width: resizedWidth,

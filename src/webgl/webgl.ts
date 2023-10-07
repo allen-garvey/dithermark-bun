@@ -30,7 +30,9 @@
  */
 
 import m4 from './webgl-m4';
-import vertexShaderText from '../../shaders/vertex.glsl';
+const path = require('path');
+const fs = require('fs');
+const vertexShaderText = fs.readFileSync(path.resolve(__dirname, '../../shaders/vertex.glsl'));
 
 export type SetUniformsFunction = (gl: any, customUniformLocations:Record<string, any>) => void;
 
@@ -50,6 +52,7 @@ function createShader(gl, type, source) {
         return shader;
     }
     //something went wrong
+    console.log(`Shader compilation failed ${source} `);
     console.log(gl.getShaderInfoLog(shader));
     gl.deleteShader(shader);
 }
@@ -73,6 +76,7 @@ function createProgram(gl, vertexShader, fragmentShader) {
         return program;
     }
     //something went wrong
+    console.log('Can\'t create program');
     console.log(gl.getProgramInfoLog(program));
     gl.deleteProgram(program);
 }
@@ -105,6 +109,7 @@ export const  createDrawImageFunc = (gl, fragmentShaderText: string, customUnifo
     const program = createProgram(gl, createVertexShader(gl, vertexShaderText), createFragmentShader(gl, fragmentShaderText));
     //if program is string, that means there was an error compiling
     if(typeof program === 'string'){
+        console.log('Program compilation failed');
         console.log(program);
         return;
     }
@@ -161,7 +166,7 @@ export const  createDrawImageFunc = (gl, fragmentShaderText: string, customUnifo
         gl.vertexAttribPointer(texcoordLocation, 2, gl.FLOAT, false, 0, 0);
         
         // this matrix will convert from pixels to clip space
-        let matrix = m4.orthographic(0, gl.canvas.width, gl.canvas.height, 0, -1, 1);
+        let matrix = m4.orthographic(0, texWidth, texHeight, 0, -1, 1);
         
         // this matrix will translate our quad to dstX, dstY
         const dstX = 0; 
