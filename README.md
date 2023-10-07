@@ -14,7 +14,7 @@ A headless version of Dithermark using bun.
 
 ## Running on Node
 
-* `bun build.js` && `./fix-node.sh` && `node out/index.js`
+* `bun build.js && ./fix-node.sh && node out/index.js`
 
 ## License
 

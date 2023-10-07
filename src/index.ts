@@ -34,8 +34,8 @@ image
 
             // won't work until node_module_register is implemented
             // https://github.com/oven-sh/bun/issues/4290
-            // const gl = require('gl')(width, height, { preserveDrawingBuffer: true });
-            // createAndLoadTextureFromArray(gl, buffer, width, height);
+            const gl = require('gl')(width, height, { preserveDrawingBuffer: true });
+            createAndLoadTextureFromArray(gl, buffer, width, height);
             
             return sharp(buffer, {
                 raw: {
