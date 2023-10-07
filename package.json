@@ -1,0 +1,17 @@
+{
+  "name": "dithermark-bun",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Allen Garvey",
+  "license": "MIT",
+  "dependencies": {
+    "sharp": "^0.32.6"
+  },
+  "devDependencies": {
+    "bun-types": "^1.0.5-canary.20231006T140143"
+  }
+}
