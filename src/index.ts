@@ -5,6 +5,8 @@ import { createSmoothDrawFunc } from './webgl/filters';
 
 const image = sharp(path.resolve(__dirname, '..', 'example.jpg'));
 
+const smoothingValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 14, 16];
+
 image
 .ensureAlpha()
 .metadata()
@@ -22,6 +24,7 @@ image
         kernel: 'nearest',
         fastShrinkOnLoad: false,
     })
+    .flip() // required or webgl will flip image
     return new Promise<void>((resolve, reject) => {
         image.raw()
         .toBuffer((err, pixels: Uint8Array, info) => {
@@ -38,9 +41,11 @@ image
             const texture = createAndLoadTextureFromArray(gl, pixels, resizedWidth, resizedHeight);
             const smoothFilter = createSmoothDrawFunc(gl);
             smoothFilter(gl, texture, resizedWidth, resizedHeight, (gl, customUniformLocations) => {
-                gl.uniform1i(customUniformLocations['u_radius'], 4);
-                gl.uniform2f(customUniformLocations['u_image_dimensions'], new Float32Array([resizedWidth, resizedHeight]));
+                gl.uniform1i(customUniformLocations['u_radius'], smoothingValues[1]);
+                gl.uniform2f(customUniformLocations['u_image_dimensions'], resizedWidth, resizedHeight);
             });
+
+            gl.readPixels(0, 0, resizedWidth, resizedHeight, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
 
             
             return sharp(pixels, {
