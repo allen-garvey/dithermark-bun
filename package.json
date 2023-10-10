@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node ./dist/main.js",
+    "build": "webpack --config ./webpack.config.js",
+    "watch": "webpack --config ./webpack.config.js --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Allen Garvey",
@@ -13,6 +16,11 @@
     "sharp": "^0.32.6"
   },
   "devDependencies": {
-    "bun-types": "^1.0.5-canary.20231006T140143"
+    "bun-types": "^1.0.5-canary.20231006T140143",
+    "ts-loader": "^9.5.0",
+    "typescript": "^5.2.2",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-node-externals": "^3.0.0"
   }
 }
