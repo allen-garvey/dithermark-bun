@@ -3,7 +3,7 @@ const sharp = require('sharp');
 import { createAndLoadTextureFromArray } from './webgl/webgl';
 import { createSmoothDrawFunc } from './webgl/filters';
 
-const image = sharp(path.resolve(__dirname, '..', 'example.jpg'));
+const image = sharp(path.resolve(__dirname, '..', 'example/example.jpg'));
 
 const smoothingValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 14, 16];
 
