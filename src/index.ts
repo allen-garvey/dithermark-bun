@@ -16,9 +16,6 @@ image
     const resizePercentage = 3;
     console.log(`width: ${width} height: ${height}`);
 
-    let resizedWidth;
-    let resizedHeight;
-
     image.resize({
         width: Math.ceil(width * resizePercentage / 100),
         kernel: 'nearest',
@@ -31,8 +28,8 @@ image
             if(err){
                 return reject();
             }
-            resizedHeight = info.height;
-            resizedWidth = info.width;
+            const resizedHeight = info.height;
+            const resizedWidth = info.width;
             console.log(`resized width: ${resizedWidth} resized height: ${resizedHeight}`);
 
             // won't work until node_module_register is implemented
