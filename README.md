@@ -1,11 +1,10 @@
-# Dithermark-bun
+# Dithermark-node
 
-A headless version of Dithermark using bun.
+A headless version of [Dithermark](https://github.com/allen-garvey/dithermark) using node.
 
 ## Dependencies
 
 * node ~= 16
-* bun >= 1.0
 * npm
 
 ## Getting Started
@@ -14,12 +13,6 @@ A headless version of Dithermark using bun.
 * `npm run build`
 * `npm start`
 
-## Building with Bun / Running with Node
-
-(Currently doesn't work for some reason - causes segfault in webgl)
-
-* `bun build.js && ./fix-node.sh && node out/index.js`
-
 ## License
 
-Dithermark-bun is released under the MIT License. See license.txt for more details.
+Dithermark-node is released under the MIT License. See license.txt for more details.

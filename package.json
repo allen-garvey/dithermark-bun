@@ -1,5 +1,5 @@
 {
-  "name": "dithermark-bun",
+  "name": "dithermark-node",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -16,7 +16,6 @@
     "sharp": "^0.32.6"
   },
   "devDependencies": {
-    "bun-types": "^1.0.5-canary.20231006T140143",
     "ts-loader": "^9.5.0",
     "typescript": "^5.2.2",
     "webpack": "^5.88.2",
