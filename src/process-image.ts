@@ -58,7 +58,7 @@ export const processImage = (
                         resizedWidth,
                         resizedHeight
                     );
-                    const frameBuffer = createFramebuffer(gl, texture);
+                    const frameBuffer = createFramebuffer(gl, texture, resizedWidth, resizedHeight);
                     const brightnessAmount =
                         options.image?.preDither?.brightness;
                     if (

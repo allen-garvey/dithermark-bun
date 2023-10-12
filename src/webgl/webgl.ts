@@ -244,7 +244,9 @@ export const createDrawImageFunc = (
 // https://webglfundamentals.org/webgl/lessons/webgl-render-to-texture.html
 export const createFramebuffer = (
     gl: WebGLRenderingContext,
-    texture: WebGLTexture
+    texture: WebGLTexture,
+    texWidth: number,
+    texHeight: number
 ): WebGLFramebuffer => {
     const frameBuffer = gl.createFramebuffer();
     gl.bindFramebuffer(gl.FRAMEBUFFER, frameBuffer);
@@ -255,6 +257,7 @@ export const createFramebuffer = (
         texture,
         0
     );
+    gl.viewport(0, 0, texWidth, texHeight);
 
     return frameBuffer;
 };
