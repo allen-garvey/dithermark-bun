@@ -1,6 +1,12 @@
- const sharp = require('sharp');
-import { createAndLoadTextureFromArray } from './webgl/webgl';
-import { createSmoothDrawFunc, createBrightnessDrawFunc } from './webgl/filters';
+const sharp = require('sharp');
+import {
+    createAndLoadTextureFromArray,
+    createFramebuffer,
+} from './webgl/webgl';
+import {
+    createSmoothDrawFunc,
+    createBrightnessDrawFunc,
+} from './webgl/filters';
 import type { DithermarkNodeOptions } from './options';
 import { pixelationRatio } from './filters/filter-options';
 
@@ -52,15 +58,26 @@ export const processImage = (
                         resizedWidth,
                         resizedHeight
                     );
-                    const brightnessAmount = options.image?.preDither?.brightness;
-                    if(typeof brightnessAmount === 'number' && brightnessAmount !== 100){
+                    const frameBuffer = createFramebuffer(gl, texture);
+                    const brightnessAmount =
+                        options.image?.preDither?.brightness;
+                    if (
+                        typeof brightnessAmount === 'number' &&
+                        brightnessAmount !== 100
+                    ) {
                         const brightnessFilter = createBrightnessDrawFunc(gl);
-                        brightnessFilter(gl, texture, resizedWidth, resizedHeight, (gl, customUniformLocations) => {
-                            gl.uniform1f(
-                                customUniformLocations['u_brightness'],
-                                brightnessAmount / 100
-                            );
-                        });
+                        brightnessFilter(
+                            gl,
+                            texture,
+                            resizedWidth,
+                            resizedHeight,
+                            (gl, customUniformLocations) => {
+                                gl.uniform1f(
+                                    customUniformLocations['u_brightness'],
+                                    brightnessAmount / 100
+                                );
+                            }
+                        );
                     }
                     if (options.image?.preDither?.smooth) {
                         const smoothFilter = createSmoothDrawFunc(gl);

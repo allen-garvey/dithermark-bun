@@ -3,7 +3,7 @@
         "preDither": {
             "pixelate": 2,
             "brightness": 200,
-            "smooth": 1
+            "smooth": 0
         }
     }
 }
