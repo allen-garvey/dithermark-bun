@@ -2,6 +2,7 @@ const sharp = require('sharp');
 import { createAndLoadTextureFromArray } from './webgl/webgl';
 import { createSmoothDrawFunc } from './webgl/filters';
 import type { DithermarkNodeOptions } from './options';
+import { pixelationRatio } from './filters/filter-options';
 
 export const processImage = (
     inputImagePath: string,
@@ -9,8 +10,6 @@ export const processImage = (
     options: DithermarkNodeOptions
 ): Promise<void> => {
     const image = sharp(inputImagePath);
-
-    const smoothingValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 14, 16];
 
     return image
         .ensureAlpha()
@@ -21,13 +20,20 @@ export const processImage = (
             const resizePercentage = 3;
             console.log(`width: ${width} height: ${height}`);
 
-            image
-                .resize({
-                    width: Math.ceil((width * resizePercentage) / 100),
+            if (options.image?.preDither?.pixelate) {
+                image.resize({
+                    width: Math.ceil(
+                        width *
+                            pixelationRatio(
+                                width * height,
+                                options.image.preDither.pixelate
+                            )
+                    ),
                     kernel: 'nearest',
                     fastShrinkOnLoad: false,
-                })
-                .flip(); // required or webgl will flip image
+                });
+            }
+            image.flip(); // required or webgl will flip image
             return new Promise<void>((resolve, reject) => {
                 image.raw().toBuffer((err, pixels: Uint8Array, info) => {
                     if (err) {
@@ -50,24 +56,28 @@ export const processImage = (
                         resizedWidth,
                         resizedHeight
                     );
-                    const smoothFilter = createSmoothDrawFunc(gl);
-                    smoothFilter(
-                        gl,
-                        texture,
-                        resizedWidth,
-                        resizedHeight,
-                        (gl, customUniformLocations) => {
-                            gl.uniform1i(
-                                customUniformLocations['u_radius'],
-                                smoothingValues[1]
-                            );
-                            gl.uniform2f(
-                                customUniformLocations['u_image_dimensions'],
-                                resizedWidth,
-                                resizedHeight
-                            );
-                        }
-                    );
+                    if (options.image?.preDither?.smooth) {
+                        const smoothFilter = createSmoothDrawFunc(gl);
+                        smoothFilter(
+                            gl,
+                            texture,
+                            resizedWidth,
+                            resizedHeight,
+                            (gl, customUniformLocations) => {
+                                gl.uniform1i(
+                                    customUniformLocations['u_radius'],
+                                    options.image?.preDither?.smooth
+                                );
+                                gl.uniform2f(
+                                    customUniformLocations[
+                                        'u_image_dimensions'
+                                    ],
+                                    resizedWidth,
+                                    resizedHeight
+                                );
+                            }
+                        );
+                    }
 
                     gl.readPixels(
                         0,
