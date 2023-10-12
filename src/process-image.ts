@@ -1,10 +1,12 @@
 const sharp = require('sharp');
 import { createAndLoadTextureFromArray } from './webgl/webgl';
 import { createSmoothDrawFunc } from './webgl/filters';
+import type { DithermarkNodeOptions } from './options';
 
 export const processImage = (
     inputImagePath: string,
-    outputImagePath: string
+    outputImagePath: string,
+    options: DithermarkNodeOptions
 ): Promise<void> => {
     const image = sharp(inputImagePath);
 

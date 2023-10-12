@@ -14,6 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "gl": "^6.0.2",
+    "jsonschema": "^1.4.1",
     "sharp": "^0.32.6"
   },
   "devDependencies": {

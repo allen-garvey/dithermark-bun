@@ -1,0 +1,8 @@
+{
+    "image": {
+        "preDither": {
+            "pixelate": 7,
+            "smooth": 1
+        }
+    }
+}
