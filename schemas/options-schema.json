@@ -16,16 +16,19 @@
                     "additionalProperties": false,
                     "properties": {
                         "pixelate": {
+                            "description": "Amount. 0 means no change.",
                             "type": "integer",
                             "minimum": 0,
                             "maximum": 21
                         },
                         "brightness": {
+                            "description": "Number as percent. 100 means no change.",
                             "type": "integer",
                             "minimum": 0,
                             "maximum": 300
                         },
                         "smooth": {
+                            "description": "Amount. 0 means no change.",
                             "type": "integer",
                             "minimum": 0,
                             "maximum": 16
