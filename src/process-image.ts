@@ -3,12 +3,9 @@ import {
     createAndLoadTextureFromArray,
     createFramebuffer,
 } from './webgl/webgl';
-import {
-    createSmoothDrawFunc,
-    createBrightnessDrawFunc,
-} from './webgl/filters';
 import type { DithermarkNodeOptions } from './options';
 import { pixelationRatio } from './filters/filter-options';
+import { processImageWithFilters } from './filters/process-filters';
 
 export const processImage = (
     inputImagePath: string,
@@ -58,49 +55,13 @@ export const processImage = (
                         resizedWidth,
                         resizedHeight
                     );
-                    const frameBuffer = createFramebuffer(gl, texture, resizedWidth, resizedHeight);
-                    const brightnessAmount =
-                        options.image?.preDither?.brightness;
-                    if (
-                        typeof brightnessAmount === 'number' &&
-                        brightnessAmount !== 100
-                    ) {
-                        const brightnessFilter = createBrightnessDrawFunc(gl);
-                        brightnessFilter(
-                            gl,
-                            texture,
-                            resizedWidth,
-                            resizedHeight,
-                            (gl, customUniformLocations) => {
-                                gl.uniform1f(
-                                    customUniformLocations['u_brightness'],
-                                    brightnessAmount / 100
-                                );
-                            }
-                        );
-                    }
-                    if (options.image?.preDither?.smooth) {
-                        const smoothFilter = createSmoothDrawFunc(gl);
-                        smoothFilter(
-                            gl,
-                            texture,
-                            resizedWidth,
-                            resizedHeight,
-                            (gl, customUniformLocations) => {
-                                gl.uniform1i(
-                                    customUniformLocations['u_radius'],
-                                    options.image?.preDither?.smooth
-                                );
-                                gl.uniform2f(
-                                    customUniformLocations[
-                                        'u_image_dimensions'
-                                    ],
-                                    resizedWidth,
-                                    resizedHeight
-                                );
-                            }
-                        );
-                    }
+                    createFramebuffer(gl, texture, resizedWidth, resizedHeight);
+
+                    // pre-dither filters
+                    processImageWithFilters(gl, texture, resizedWidth, resizedHeight, {
+                        brightness: options.image?.preDither?.brightness,
+                        smooth: options.image?.preDither?.smooth,
+                    });
 
                     gl.readPixels(
                         0,
