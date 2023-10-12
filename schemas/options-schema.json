@@ -12,6 +12,7 @@
             "additionalProperties": false,
             "properties": {
                 "preDither": {
+                    "description": "Filters that are run before the image is dithered.",
                     "type": "object",
                     "additionalProperties": false,
                     "properties": {

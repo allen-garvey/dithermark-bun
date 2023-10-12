@@ -13,9 +13,21 @@ export interface DithermarkNodeOptions {
    * Image filtering properties
    */
   image?: {
+    /**
+     * Filters that are run before the image is dithered.
+     */
     preDither?: {
+      /**
+       * Amount. 0 means no change.
+       */
       pixelate?: number;
+      /**
+       * Number as percent. 100 means no change.
+       */
       brightness?: number;
+      /**
+       * Amount. 0 means no change.
+       */
       smooth?: number;
     };
   };
