@@ -12,3 +12,7 @@ export const createSmoothDrawFunc = (gl: WebGLRenderingContext): DrawFunction =>
 const brightnessShaderText = fs.readFileSync(path.resolve(FILTER_SHADERS_DIR, 'brightness.glsl'));
 
 export const createBrightnessDrawFunc = (gl: WebGLRenderingContext): DrawFunction => createDrawImageFunc(gl, brightnessShaderText, ['u_brightness']);
+
+const contrastShaderText = fs.readFileSync(path.resolve(FILTER_SHADERS_DIR, 'contrast.glsl'));
+
+export const createContrastDrawFunc = (gl: WebGLRenderingContext): DrawFunction => createDrawImageFunc(gl, contrastShaderText, ['u_contrast']);

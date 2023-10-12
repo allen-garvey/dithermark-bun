@@ -1,9 +1,10 @@
 {
     "image": {
         "preDither": {
-            "pixelate": 2,
-            "brightness": 200,
-            "smooth": 1
+            "pixelate": 7,
+            "brightness": 150,
+            "contrast": 200,
+            "smooth": 0
         }
     }
 }

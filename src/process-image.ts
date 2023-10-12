@@ -20,7 +20,6 @@ export const processImage = (
         .then((metadata) => {
             const width = metadata.width;
             const height = metadata.height;
-            const resizePercentage = 3;
             console.log(`width: ${width} height: ${height}`);
 
             if (options.image?.preDither?.pixelate) {
@@ -60,6 +59,7 @@ export const processImage = (
                     // pre-dither filters
                     processImageWithFilters(gl, texture, resizedWidth, resizedHeight, {
                         brightness: options.image?.preDither?.brightness,
+                        contrast: options.image?.preDither?.contrast,
                         smooth: options.image?.preDither?.smooth,
                     });
 

@@ -26,6 +26,10 @@ export interface DithermarkNodeOptions {
        */
       brightness?: number;
       /**
+       * Number as percent. 100 means no change.
+       */
+      contrast?: number;
+      /**
        * Amount. 0 means no change.
        */
       smooth?: number;
