@@ -47,9 +47,7 @@ export const processImage = (
 
                     // won't work until node_module_register is implemented
                     // https://github.com/oven-sh/bun/issues/4290
-                    const gl = require('gl')(resizedWidth, resizedHeight, {
-                        preserveDrawingBuffer: true,
-                    });
+                    const gl = require('gl')(resizedWidth, resizedHeight);
                     const texture = createAndLoadTextureFromArray(
                         gl,
                         pixels,
