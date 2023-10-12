@@ -45,8 +45,6 @@ export const processImage = (
                         `resized width: ${resizedWidth} resized height: ${resizedHeight}`
                     );
 
-                    // won't work until node_module_register is implemented
-                    // https://github.com/oven-sh/bun/issues/4290
                     const gl = require('gl')(resizedWidth, resizedHeight);
                     const texture = createAndLoadTextureFromArray(
                         gl,
