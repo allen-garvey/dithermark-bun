@@ -34,16 +34,16 @@ const path = require('path');
 const fs = require('fs');
 const vertexShaderText = fs.readFileSync(path.resolve(__dirname, '../../shaders/vertex.glsl'));
 
-export type SetUniformsFunction = (gl: any, customUniformLocations:Record<string, any>) => void;
+export type SetUniformsFunction = (gl: WebGLRenderingContext, customUniformLocations:Record<string, any>) => void;
 
-export type DrawFunction = (gl: any, tex: any, texWidth: number, texHeight: number, setCustomUniformsFunc:SetUniformsFunction) => void;
+export type DrawFunction = (gl: WebGLRenderingContext, tex: WebGLTexture, texWidth: number, texHeight: number, setCustomUniformsFunc:SetUniformsFunction) => void;
 
 
 /*
 * Shader and program creation
 */
 //based on: https://webglfundamentals.org/webgl/lessons/webgl-fundamentals.html
-function createShader(gl, type, source) {
+function createShader(gl: WebGLRenderingContext, type: number, source: string): WebGLShader {
     const shader = gl.createShader(type);
     gl.shaderSource(shader, source);
     gl.compileShader(shader);
@@ -57,16 +57,16 @@ function createShader(gl, type, source) {
     gl.deleteShader(shader);
 }
 
-function createVertexShader(gl, vertexShaderSource){
+function createVertexShader(gl: WebGLRenderingContext, vertexShaderSource: string): WebGLShader{
     return createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
 }
 
-function createFragmentShader(gl, fragmentShaderSource){
+function createFragmentShader(gl: WebGLRenderingContext, fragmentShaderSource: string): WebGLShader{
     return createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
 }
 
 
-function createProgram(gl, vertexShader, fragmentShader) {
+function createProgram(gl: WebGLRenderingContext, vertexShader: WebGLShader, fragmentShader: WebGLShader) {
     const program = gl.createProgram();
     gl.attachShader(program, vertexShader);
     gl.attachShader(program, fragmentShader);
@@ -84,7 +84,7 @@ function createProgram(gl, vertexShader, fragmentShader) {
 /*
 * Textures
 */
-export function createAndLoadTextureFromArray(gl, pixels: Uint8Array, imageWidth: number, imageHeight: number) {
+export function createAndLoadTextureFromArray(gl: WebGLRenderingContext, pixels: Uint8Array, imageWidth: number, imageHeight: number): WebGLTexture {
     const texture = gl.createTexture();
     
     gl.bindTexture(gl.TEXTURE_2D, texture);
@@ -104,7 +104,7 @@ export function createAndLoadTextureFromArray(gl, pixels: Uint8Array, imageWidth
 */
 
 //multiple textures based on: https://webglfundamentals.org/webgl/lessons/webgl-2-textures.html
-export const  createDrawImageFunc = (gl, fragmentShaderText: string, customUniformNames: string[]=[]): DrawFunction =>{
+export const  createDrawImageFunc = (gl: WebGLRenderingContext, fragmentShaderText: string, customUniformNames: string[]=[]): DrawFunction =>{
     // setup GLSL program
     const program = createProgram(gl, createVertexShader(gl, vertexShaderText), createFragmentShader(gl, fragmentShaderText));
     //if program is string, that means there was an error compiling
@@ -151,7 +151,7 @@ export const  createDrawImageFunc = (gl, fragmentShaderText: string, customUnifo
     // Put texcoords in the buffer
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(unitQuad), gl.STATIC_DRAW);
     
-    return (gl, tex, texWidth:number, texHeight:number, setCustomUniformsFunc: SetUniformsFunction) => {
+    return (gl: WebGLRenderingContext, tex, texWidth:number, texHeight:number, setCustomUniformsFunc: SetUniformsFunction) => {
         gl.bindTexture(gl.TEXTURE_2D, tex);
         
         // Tell WebGL to use our shader program pair

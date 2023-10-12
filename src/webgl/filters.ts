@@ -7,8 +7,8 @@ const FILTER_SHADERS_DIR = path.resolve(__dirname, '../../shaders/filters/');
 
 const smoothShaderText = fs.readFileSync(path.resolve(FILTER_SHADERS_DIR, 'smoothing.glsl'));
 
-export const createSmoothDrawFunc = (gl): DrawFunction => createDrawImageFunc(gl, smoothShaderText, ['u_radius', 'u_image_dimensions']);
+export const createSmoothDrawFunc = (gl: WebGLRenderingContext): DrawFunction => createDrawImageFunc(gl, smoothShaderText, ['u_radius', 'u_image_dimensions']);
 
 const brightnessShaderText = fs.readFileSync(path.resolve(FILTER_SHADERS_DIR, 'brightness.glsl'));
 
-export const createBrightnessDrawFunc = (gl): DrawFunction => createDrawImageFunc(gl, brightnessShaderText, ['u_brightness']);
+export const createBrightnessDrawFunc = (gl: WebGLRenderingContext): DrawFunction => createDrawImageFunc(gl, brightnessShaderText, ['u_brightness']);
