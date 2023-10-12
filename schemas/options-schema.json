@@ -20,6 +20,11 @@
                             "minimum": 0,
                             "maximum": 21
                         },
+                        "brightness": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 300
+                        },
                         "smooth": {
                             "type": "integer",
                             "enum": [

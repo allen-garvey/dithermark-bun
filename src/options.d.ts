@@ -15,6 +15,7 @@ export interface DithermarkNodeOptions {
   image?: {
     preDither?: {
       pixelate?: number;
+      brightness?: number;
       smooth?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 10 | 12 | 14 | 16;
     };
   };
