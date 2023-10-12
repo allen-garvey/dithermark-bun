@@ -1,0 +1,47 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://dithermark.com/options-schema.json",
+    "title": "Dithermark-node Options",
+    "description": "This document records options that can be passed to Dithermark-node",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "image": {
+            "description": "Image filtering properties",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "preDither": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "pixelate": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 16
+                        },
+                        "smooth": {
+                            "type": "integer",
+                            "enum": [
+                                1,
+                                2,
+                                3,
+                                4,
+                                5,
+                                6,
+                                7,
+                                8,
+                                10,
+                                12,
+                                14,
+                                16
+                            ]
+                        }
+                    }
+                }
+            },
+            "required": []
+        }
+    },
+    "required": []
+}

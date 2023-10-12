@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node ./dist/main.js",
     "build": "webpack --config ./webpack.config.js",
+    "build-types": "node schemas/build-types.mjs",
     "watch": "webpack --config ./webpack.config.js --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,6 +17,7 @@
     "sharp": "^0.32.6"
   },
   "devDependencies": {
+    "json-schema-to-typescript": "^13.1.1",
     "ts-loader": "^9.5.0",
     "typescript": "^5.2.2",
     "webpack": "^5.88.2",
