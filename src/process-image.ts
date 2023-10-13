@@ -58,6 +58,7 @@ export const processImage = (
 
                     // pre-dither filters
                     processImageWithFilters(gl, texture, resizedWidth, resizedHeight, {
+                        saturation: options.image?.preDither?.saturation,
                         brightness: options.image?.preDither?.brightness,
                         contrast: options.image?.preDither?.contrast,
                         smooth: options.image?.preDither?.smooth,

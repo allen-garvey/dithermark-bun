@@ -28,6 +28,12 @@
                             "minimum": 0,
                             "maximum": 300
                         },
+                        "saturation": {
+                            "description": "Number as percent. 100 means no change.",
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 300
+                        },
                         "contrast": {
                             "description": "Number as percent. 100 means no change.",
                             "type": "integer",

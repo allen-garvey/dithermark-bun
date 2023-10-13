@@ -2,6 +2,7 @@ import {
     createSmoothDrawFunc,
     createBrightnessDrawFunc,
     createContrastDrawFunc,
+    createSaturationDrawFunc,
 } from '../webgl/filters';
 
 interface ProcessFiltersOptions {
@@ -18,6 +19,21 @@ export const processImageWithFilters = (
     imageHeight: number,
     options: ProcessFiltersOptions
 ): void => {
+    if (typeof options.saturation === 'number' && options.saturation !== 100) {
+        const saturationFilter = createSaturationDrawFunc(gl);
+        saturationFilter(
+            gl,
+            texture,
+            imageWidth,
+            imageHeight,
+            (gl, customUniformLocations) => {
+                gl.uniform1f(
+                    customUniformLocations['u_saturation'],
+                    options.saturation / 100
+                );
+            }
+        );
+    }
     if (typeof options.brightness === 'number' && options.brightness !== 100) {
         const brightnessFilter = createBrightnessDrawFunc(gl);
         brightnessFilter(

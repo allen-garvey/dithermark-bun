@@ -28,6 +28,10 @@ export interface DithermarkNodeOptions {
       /**
        * Number as percent. 100 means no change.
        */
+      saturation?: number;
+      /**
+       * Number as percent. 100 means no change.
+       */
       contrast?: number;
       /**
        * Amount. 0 means no change.

@@ -2,6 +2,7 @@
     "image": {
         "preDither": {
             "pixelate": 7,
+            "saturation": 200,
             "brightness": 150,
             "contrast": 200,
             "smooth": 0

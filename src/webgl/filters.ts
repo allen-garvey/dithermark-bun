@@ -16,3 +16,7 @@ export const createBrightnessDrawFunc = (gl: WebGLRenderingContext): DrawFunctio
 const contrastShaderText = fs.readFileSync(path.resolve(FILTER_SHADERS_DIR, 'contrast.glsl'));
 
 export const createContrastDrawFunc = (gl: WebGLRenderingContext): DrawFunction => createDrawImageFunc(gl, contrastShaderText, ['u_contrast']);
+
+const saturationShaderText = fs.readFileSync(path.resolve(FILTER_SHADERS_DIR, 'saturation.glsl'));
+
+export const createSaturationDrawFunc = (gl: WebGLRenderingContext): DrawFunction => createDrawImageFunc(gl, saturationShaderText, ['u_saturation']);
