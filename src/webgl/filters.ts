@@ -2,21 +2,16 @@ const path = require('path');
 const fs = require('fs');
 
 import { createDrawImageFunc, DrawFunction } from './webgl';
-
 const FILTER_SHADERS_DIR = path.resolve(__dirname, '../../shaders/filters/');
 
-const smoothShaderText = fs.readFileSync(path.resolve(FILTER_SHADERS_DIR, 'smoothing.glsl'));
+type RenderFunction = (gl: WebGLRenderingContext) => DrawFunction;
 
-export const createSmoothDrawFunc = (gl: WebGLRenderingContext): DrawFunction => createDrawImageFunc(gl, smoothShaderText, ['u_radius', 'u_image_dimensions']);
+const buildDrawFunc = (shaderPath: string, uniformNames: string[]): RenderFunction => (gl: WebGLRenderingContext): DrawFunction => createDrawImageFunc(gl, fs.readFileSync(path.resolve(FILTER_SHADERS_DIR, shaderPath)), uniformNames);
 
-const brightnessShaderText = fs.readFileSync(path.resolve(FILTER_SHADERS_DIR, 'brightness.glsl'));
+export const createSmoothDrawFunc = buildDrawFunc('smooth.glsl', ['u_radius', 'u_image_dimensions']);
 
-export const createBrightnessDrawFunc = (gl: WebGLRenderingContext): DrawFunction => createDrawImageFunc(gl, brightnessShaderText, ['u_brightness']);
+export const createBrightnessDrawFunc = buildDrawFunc('brightness.glsl', ['u_brightness']);;
 
-const contrastShaderText = fs.readFileSync(path.resolve(FILTER_SHADERS_DIR, 'contrast.glsl'));
+export const createContrastDrawFunc = buildDrawFunc('contrast.glsl', ['u_contrast']);
 
-export const createContrastDrawFunc = (gl: WebGLRenderingContext): DrawFunction => createDrawImageFunc(gl, contrastShaderText, ['u_contrast']);
-
-const saturationShaderText = fs.readFileSync(path.resolve(FILTER_SHADERS_DIR, 'saturation.glsl'));
-
-export const createSaturationDrawFunc = (gl: WebGLRenderingContext): DrawFunction => createDrawImageFunc(gl, saturationShaderText, ['u_saturation']);
+export const createSaturationDrawFunc = buildDrawFunc('saturation.glsl', ['u_saturation']);
