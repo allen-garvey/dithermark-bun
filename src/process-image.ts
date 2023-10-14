@@ -65,6 +65,8 @@ export const processImage = (
                     createFramebuffer(gl, resizedWidth, resizedHeight);
                     bindTextureToFramebuffer(gl, targetTexture);
 
+                    const imageProcessingStartTime = performance.now();
+
                     let imageProcessingResult: ImageProcessingResult;
                     // pre-dither filters
                     imageProcessingResult = processImageWithFilters(
@@ -82,6 +84,20 @@ export const processImage = (
                     );
                     sourceTexture = imageProcessingResult.sourceTexture;
                     targetTexture = imageProcessingResult.targetTexture;
+
+                    const imageProcessingEndTime = performance.now();
+                    const imageProcessingTimeInSeconds =
+                        (imageProcessingEndTime - imageProcessingStartTime) /
+                        1000;
+                    console.log(
+                        `Total image processing time: ${imageProcessingTimeInSeconds.toFixed(
+                            3
+                        )} seconds. ${(
+                            (resizedHeight * resizedWidth) /
+                            1_000_000 /
+                            imageProcessingTimeInSeconds
+                        ).toFixed(3)} Megapixels per second`
+                    );
 
                     // before reading pixels need to bind the source texture
                     // since framebuffer texture will be read
