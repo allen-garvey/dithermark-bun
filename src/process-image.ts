@@ -2,6 +2,9 @@ const sharp = require('sharp');
 import {
     createAndLoadTextureFromArray,
     createFramebuffer,
+    bindTextureToFramebuffer,
+    createEmptyTexture,
+    ImageProcessingResult,
 } from './webgl/webgl';
 import type { DithermarkNodeOptions } from './options';
 import { pixelationRatio } from './filters/filter-options';
@@ -48,22 +51,42 @@ export const processImage = (
                     );
 
                     const gl = require('gl')(resizedWidth, resizedHeight);
-                    const texture = createAndLoadTextureFromArray(
+                    let sourceTexture = createAndLoadTextureFromArray(
                         gl,
                         pixels,
                         resizedWidth,
                         resizedHeight
                     );
-                    createFramebuffer(gl, texture, resizedWidth, resizedHeight);
+                    let targetTexture = createEmptyTexture(
+                        gl,
+                        resizedWidth,
+                        resizedHeight
+                    );
+                    createFramebuffer(gl, resizedWidth, resizedHeight);
+                    bindTextureToFramebuffer(gl, targetTexture);
 
+                    let imageProcessingResult: ImageProcessingResult;
                     // pre-dither filters
-                    processImageWithFilters(gl, texture, resizedWidth, resizedHeight, {
-                        saturation: options.image?.preDither?.saturation,
-                        brightness: options.image?.preDither?.brightness,
-                        contrast: options.image?.preDither?.contrast,
-                        smooth: options.image?.preDither?.smooth,
-                    });
+                    imageProcessingResult = processImageWithFilters(
+                        gl,
+                        sourceTexture,
+                        targetTexture,
+                        resizedWidth,
+                        resizedHeight,
+                        {
+                            saturation: options.image?.preDither?.saturation,
+                            brightness: options.image?.preDither?.brightness,
+                            contrast: options.image?.preDither?.contrast,
+                            smooth: options.image?.preDither?.smooth,
+                        }
+                    );
+                    sourceTexture = imageProcessingResult.sourceTexture;
+                    targetTexture = imageProcessingResult.targetTexture;
 
+                    // before reading pixels need to bind the source texture
+                    // since framebuffer texture will be read
+                    // and the last image processing function will have made the target texture the source texture
+                    bindTextureToFramebuffer(gl, sourceTexture);
                     gl.readPixels(
                         0,
                         0,

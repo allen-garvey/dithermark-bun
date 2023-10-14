@@ -36,6 +36,11 @@ const vertexShaderText = fs.readFileSync(
     path.resolve(__dirname, '../../shaders/vertex.glsl')
 );
 
+export interface ImageProcessingResult {
+    sourceTexture: WebGLTexture;
+    targetTexture: WebGLTexture;
+}
+
 export type SetUniformsFunction = (
     gl: WebGLRenderingContext,
     customUniformLocations: Record<string, any>
@@ -107,12 +112,12 @@ function createProgram(
 /*
  * Textures
  */
-export function createAndLoadTextureFromArray(
+export const createAndLoadTextureFromArray = (
     gl: WebGLRenderingContext,
     pixels: Uint8Array,
     imageWidth: number,
     imageHeight: number
-): WebGLTexture {
+): WebGLTexture => {
     const texture = gl.createTexture();
 
     gl.bindTexture(gl.TEXTURE_2D, texture);
@@ -135,7 +140,38 @@ export function createAndLoadTextureFromArray(
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
 
     return texture;
-}
+};
+
+// https://webglfundamentals.org/webgl/lessons/webgl-render-to-texture.html
+export const createEmptyTexture = (
+    gl: WebGLRenderingContext,
+    width: number,
+    height: number
+): WebGLTexture => {
+    const texture = gl.createTexture();
+
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+
+    const data = null;
+    gl.texImage2D(
+        gl.TEXTURE_2D,
+        0,
+        gl.RGBA,
+        width,
+        height,
+        0,
+        gl.RGBA,
+        gl.UNSIGNED_BYTE,
+        data
+    );
+
+    // let's assume all images are not a power of 2
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+
+    return texture;
+};
 
 /*
  * Actual webgl function creation
@@ -244,12 +280,20 @@ export const createDrawImageFunc = (
 // https://webglfundamentals.org/webgl/lessons/webgl-render-to-texture.html
 export const createFramebuffer = (
     gl: WebGLRenderingContext,
-    texture: WebGLTexture,
     texWidth: number,
     texHeight: number
 ): WebGLFramebuffer => {
     const frameBuffer = gl.createFramebuffer();
     gl.bindFramebuffer(gl.FRAMEBUFFER, frameBuffer);
+    gl.viewport(0, 0, texWidth, texHeight);
+
+    return frameBuffer;
+};
+
+export const bindTextureToFramebuffer = (
+    gl: WebGLRenderingContext,
+    texture: WebGLTexture
+): void => {
     gl.framebufferTexture2D(
         gl.FRAMEBUFFER,
         gl.COLOR_ATTACHMENT0,
@@ -257,7 +301,4 @@ export const createFramebuffer = (
         texture,
         0
     );
-    gl.viewport(0, 0, texWidth, texHeight);
-
-    return frameBuffer;
 };
