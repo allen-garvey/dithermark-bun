@@ -38,5 +38,155 @@ export interface DithermarkNodeOptions {
        */
       smooth?: number;
     };
+    /**
+     * Options for dithering the image.
+     */
+    dither?: {
+      type: "COLOR" | "BLACK_AND_WHITE";
+      colorSettings?: {
+        colorCount: number;
+        colorComparison: "LIGHTNESS" | "HUE" | "HUE_AND_LIGHTNESS" | "WEIGHTED_HSL" | "RGB" | "LUMA";
+        algorithm: "CLOSEST_COLOR" | "RANDOM";
+        colorSource: "PALETTE" | "COLORS";
+        palette?:
+          | "Elevate"
+          | "Primaries"
+          | "Imperial"
+          | "Galaxy"
+          | "Ketchup"
+          | "Pueblo"
+          | "Kelp"
+          | "Seance"
+          | "Rose"
+          | "Wildfire"
+          | "Blueberry"
+          | "Ocean"
+          | "Lilac"
+          | "Sepia"
+          | "Lichen"
+          | "Bronze"
+          | "Shamrock"
+          | "Sandcastle"
+          | "Apricot"
+          | "Goldust"
+          | "Brass"
+          | "Patina"
+          | "Wildberry"
+          | "Sunny"
+          | "Faded"
+          | "Neon"
+          | "Watermelon"
+          | "Crystals"
+          | "Monochrome"
+          | "Mondrianchromatic";
+        /**
+         * @minItems 2
+         * @maxItems 18
+         */
+        colors?:
+          | [string, string]
+          | [string, string, string]
+          | [string, string, string, string]
+          | [string, string, string, string, string]
+          | [string, string, string, string, string, string]
+          | [string, string, string, string, string, string, string]
+          | [string, string, string, string, string, string, string, string]
+          | [string, string, string, string, string, string, string, string, string]
+          | [string, string, string, string, string, string, string, string, string, string]
+          | [string, string, string, string, string, string, string, string, string, string, string]
+          | [string, string, string, string, string, string, string, string, string, string, string, string]
+          | [string, string, string, string, string, string, string, string, string, string, string, string, string]
+          | [
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string
+            ]
+          | [
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string
+            ]
+          | [
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string
+            ]
+          | [
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string
+            ]
+          | [
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string,
+              string
+            ];
+      };
+    };
   };
 }

@@ -6,6 +6,16 @@
             "brightness": 120,
             "contrast": 120,
             "smooth": 1
+        },
+        "dither": {
+            "type": "COLOR",
+            "colorSettings": {
+                "colorCount": 18,
+                "algorithm": "CLOSEST_COLOR",
+                "colorComparison": "RGB",
+                "colorSource": "PALETTE",
+                "palette": "Elevate"
+            }
         }
     }
 }

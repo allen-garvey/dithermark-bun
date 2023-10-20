@@ -47,6 +47,142 @@
                             "maximum": 16
                         }
                     }
+                },
+                "dither": {
+                    "description": "Options for dithering the image.",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "enum": [
+                                "COLOR",
+                                "BLACK_AND_WHITE"
+                            ]
+                        },
+                        "colorSettings": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "colorCount": {
+                                    "type": "number",
+                                    "minimum": 2,
+                                    "maximum": 18
+                                },
+                                "colorComparison": {
+                                    "type": "string",
+                                    "enum": [
+                                        "LIGHTNESS",
+                                        "HUE",
+                                        "HUE_AND_LIGHTNESS",
+                                        "WEIGHTED_HSL",
+                                        "RGB",
+                                        "LUMA"
+                                    ]
+                                },
+                                "algorithm": {
+                                    "type": "string",
+                                    "enum": [
+                                        "CLOSEST_COLOR",
+                                        "RANDOM"
+                                    ]
+                                },
+                                "colorSource": {
+                                    "type": "string",
+                                    "enum": [
+                                        "PALETTE",
+                                        "COLORS"
+                                    ]
+                                },
+                                "palette": {
+                                    "type": "string",
+                                    "enum": [
+                                        "Elevate",
+                                        "Primaries",
+                                        "Imperial",
+                                        "Galaxy",
+                                        "Ketchup",
+                                        "Pueblo",
+                                        "Kelp",
+                                        "Seance",
+                                        "Rose",
+                                        "Wildfire",
+                                        "Blueberry",
+                                        "Ocean",
+                                        "Lilac",
+                                        "Sepia",
+                                        "Lichen",
+                                        "Bronze",
+                                        "Shamrock",
+                                        "Sandcastle",
+                                        "Apricot",
+                                        "Goldust",
+                                        "Brass",
+                                        "Patina",
+                                        "Wildberry",
+                                        "Sunny",
+                                        "Faded",
+                                        "Neon",
+                                        "Watermelon",
+                                        "Crystals",
+                                        "Monochrome",
+                                        "Mondrianchromatic"
+                                    ]
+                                },
+                                "colors": {
+                                    "type": "array",
+                                    "minItems": 2,
+                                    "maxItems": 18,
+                                    "items": {
+                                        "type": "string",
+                                        "pattern": "^#[a-f]{6}$"
+                                    }
+                                }
+                            },
+                            "required": [
+                                "colorCount",
+                                "algorithm",
+                                "colorComparison",
+                                "colorSource"
+                            ],
+                            "if": {
+                                "properties": {
+                                    "colorSource": {
+                                        "enum": [
+                                            "PALETTE"
+                                        ]
+                                    }
+                                },
+                                "then": {
+                                    "required": [
+                                        "palette"
+                                    ]
+                                },
+                                "else": {
+                                    "required": [
+                                        "colors"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "enum": [
+                                    "COLOR"
+                                ]
+                            }
+                        },
+                        "then": {
+                            "required": [
+                                "colorSettings"
+                            ]
+                        }
+                    }
                 }
             }
         }
