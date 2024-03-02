@@ -13,15 +13,15 @@
   "author": "Allen Garvey",
   "license": "MIT",
   "dependencies": {
-    "ajv": "^6.12.6",
-    "gl": "^6.0.2",
-    "sharp": "^0.32.6"
+    "ajv": "^8.12.0",
+    "gl": "^8.0.2",
+    "sharp": "^0.33.2"
   },
   "devDependencies": {
-    "json-schema-to-typescript": "^13.1.1",
-    "ts-loader": "^9.5.0",
-    "typescript": "^5.2.2",
-    "webpack": "^5.88.2",
+    "json-schema-to-typescript": "^13.1.2",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.3",
+    "webpack": "^5.90.3",
     "webpack-cli": "^5.1.4",
     "webpack-node-externals": "^3.0.0"
   }
