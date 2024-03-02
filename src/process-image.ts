@@ -38,7 +38,6 @@ export const processImage = (
                     fastShrinkOnLoad: false,
                 });
             }
-            image.flip(); // required or webgl will flip image
             return new Promise<void>((resolve, reject) => {
                 image.raw().toBuffer((err, pixels: Uint8Array, info) => {
                     if (err) {

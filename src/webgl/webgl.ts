@@ -250,7 +250,7 @@ export const createDrawImageFunc = (
         gl.vertexAttribPointer(texcoordLocation, 2, gl.FLOAT, false, 0, 0);
 
         // this matrix will convert from pixels to clip space
-        let matrix = m4.orthographic(0, texWidth, texHeight, 0, -1, 1);
+        let matrix = m4.orthographic(0, texWidth, 0, texHeight, -1, 1);
 
         // this matrix will translate our quad to dstX, dstY
         const dstX = 0;
