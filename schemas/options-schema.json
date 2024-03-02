@@ -152,17 +152,17 @@
                                             "PALETTE"
                                         ]
                                     }
-                                },
-                                "then": {
-                                    "required": [
-                                        "palette"
-                                    ]
-                                },
-                                "else": {
-                                    "required": [
-                                        "colors"
-                                    ]
                                 }
+                            },
+                            "then": {
+                                "required": [
+                                    "palette"
+                                ]
+                            },
+                            "else": {
+                                "required": [
+                                    "colors"
+                                ]
                             }
                         }
                     },
@@ -176,12 +176,12 @@
                                     "COLOR"
                                 ]
                             }
-                        },
-                        "then": {
-                            "required": [
-                                "colorSettings"
-                            ]
                         }
+                    },
+                    "then": {
+                        "required": [
+                            "colorSettings"
+                        ]
                     }
                 }
             }
